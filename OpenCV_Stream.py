@@ -49,14 +49,14 @@ while(cap.isOpened()):
         y2 = d.bottom()
         #Take Score and Face Direction Sub-Detector Index from Enumerator
         text = "%2.2f(%d)" % (scores[i], idx[i])
-        
+
         #Draw Rectangle and Show Score, Face Direction Sub-Detector Index Tag
         #cv2.rectangle(Image, Orig Coordinate, Oppo-Side Coordinate, Color(BGR), Line Width, Line Kind)
         #cv2.putText(Image, Text, Text Coordinate, Font, Size, Color(BGR), Line Width, Line Kind)
         cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 4, cv2.LINE_AA)
         cv2.putText(frame, text, (x1, y1), cv2.FONT_HERSHEY_DUPLEX, 0.7, (255, 255, 255), 1, cv2.LINE_AA)
 
-        if FeaturePoints:    
+        if FeaturePoints:
             #Get Trans-Color Frame for Feature Points
             landmarks_frame = cv2.cvtColor(frame, cv2. COLOR_BGR2RGB)
             #Find Feature Points Position
@@ -65,7 +65,7 @@ while(cap.isOpened()):
             for j in range(68):
                 cv2.circle(frame,(shape.part(j).x,shape.part(j).y), 3,( 0, 0, 255), 2)
                 cv2.putText(frame, str(j),(shape.part(j).x,shape.part(j).y),cv2. FONT_HERSHEY_COMPLEX, 0.5,( 255, 0, 0), 1)
-    
+
     #Output Resize
     if Output_ReSizeWidth != 0:
         frame = imutils.resize(frame, width = Output_ReSizeWidth)
