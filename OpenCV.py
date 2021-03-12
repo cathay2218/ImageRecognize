@@ -9,7 +9,7 @@ ImageName = "SampleImage.jpg"
 LandMarksName = "shape_predictor_68_face_landmarks.dat"
 FeaturePoints = False
 DetectAccuracyThreshold = -0.3
-ReSizeWidth = 960
+Output_ReSizeWidth = 1200      #Value is 0, Means Skip to Resize
 #==================================PreDefine Section==================================
 
 #Import Image via OpenCV
@@ -48,12 +48,13 @@ for i, d in enumerate(face_rects):
         #Find Feature Points Position
         shape = predictor(landmarks_frame, d)
         #Draw Feature Points
-        for i in range(68):
-            cv2.circle(img,(shape.part(i).x,shape.part(i).y), 3,( 0, 0, 255), 2)
-            cv2.putText(img, str(i),(shape.part(i).x,shape.part(i).y),cv2. FONT_HERSHEY_COMPLEX, 0.5,( 255, 0, 0), 1)
+        for j in range(68):
+            cv2.circle(img,(shape.part(j).x,shape.part(j).y), 3,( 0, 0, 255), 2)
+            cv2.putText(img, str(j),(shape.part(j).x,shape.part(j).y),cv2. FONT_HERSHEY_COMPLEX, 0.5,( 255, 0, 0), 1)
     
-#Resize
-img = imutils.resize(img, width = ReSizeWidth)
+#Output Resize
+if Output_ReSizeWidth != 0:
+    img = imutils.resize(img, width = Output_ReSizeWidth)
 
 #Create ImageWindow and Show Image
 cv2.imshow("Face Detection", img)
