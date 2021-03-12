@@ -1,15 +1,23 @@
+import os
 import cv2
 import dlib
 import imutils
 
-FeaturePoints = True
+#==================================PreDefine Section==================================
+RootDir = r"D:\ImageRecognize\GitHub\Sample"
+ImageName = "SampleImage.jpg"
+LandMarksName = "shape_predictor_68_face_landmarks.dat"
+FeaturePoints = False
+DetectAccuracyThreshold = -0.3
+ReSizeWidth = 960
+#==================================PreDefine Section==================================
 
 #Import Image via OpenCV
-img = cv2.imread("D:\Python\SampleImage.jpg")
+img = cv2.imread(os.path.join(RootDir, ImageName))
 
 if FeaturePoints:
-    #According to Method: shape_predictor, Load 68 Feature Points Model, this Method is for Faces Emotion Detect
-    predictor = dlib.shape_predictor("D:\Python\shape_predictor_68_face_landmarks.dat")
+    #According to Method: shape_predictor, Load 68 Feature Points Model, this Method is for Faces Shape Detect
+    predictor = dlib.shape_predictor(os.path.join(RootDir, LandMarksName))
 
 #Declare dlib Component
 detector = dlib.get_frontal_face_detector()
@@ -17,7 +25,7 @@ detector = dlib.get_frontal_face_detector()
 #Run Image Detect
 #Parameter: Source, Unsample(if Image too Small, Set this Parameter to 1), Detect Threshold
 #Output: Enum Result, Detect Score, Face Direction Sub-Detector Index
-face_rects, scores, idx = detector.run(img, 0, 0)
+face_rects, scores, idx = detector.run(img, 0, DetectAccuracyThreshold)
 
 for i, d in enumerate(face_rects):
     #Take Effective Range from Enumerator
@@ -44,8 +52,8 @@ for i, d in enumerate(face_rects):
             cv2.circle(img,(shape.part(i).x,shape.part(i).y), 3,( 0, 0, 255), 2)
             cv2.putText(img, str(i),(shape.part(i).x,shape.part(i).y),cv2. FONT_HERSHEY_COMPLEX, 0.5,( 255, 0, 0), 1)
     
-#Downsize
-img = imutils.resize(img, width=960)
+#Resize
+img = imutils.resize(img, width = ReSizeWidth)
 
 #Create ImageWindow and Show Image
 cv2.imshow("Face Detection", img)
