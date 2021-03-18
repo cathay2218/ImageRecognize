@@ -1,0 +1,94 @@
+Anaconda Useful Command
+	Show Conda Version: conda -V
+	Show Environment List: conda env list
+	
+	Create Environment: conda create -n [EnvName]
+	Copy Environment: conda create -n [EnvName] --clone [EnvNameSource]
+	Activte Environment: conda activate [EnvName]
+	DeActivate Environment: conda deactivate
+	Remove Environment: conda env remove -n [EnvName]
+	
+	Install Package to Environment: pip install [PackageName]
+	Remove Package from Environment: pip uninstall [PackageName]
+--------------------------------------------------------------
+Install Anaconda Management Suite
+	Run Installer as Administrator
+		Set: Install for "Just Me"
+		Set: Install Path
+		Advanced Options Set Default
+		Install and Finish
+--------------------------------------------------------------
+Build Devlope Environment for Dlib (CPU Version)
+	Run Conda Prompt or PowerShell
+	Create Environment
+		Command: conda create -n [EnvName] python=3.6.12
+	Activte Environment
+		Command: conda activate [EnvName]
+	Install Dependent Package
+		Command: pip install numpy
+		Command: pip install scipy
+		Command: pip install matplotlib
+		Command: pip install scikit-learn
+		Command: pip install jupyter
+		Command: pip install opencv-python
+		Command: pip install dlib==19.8.1
+		Command: pip install imutils
+		Command: pip install scikit-image		#for Generate HOG SVM Characteristic File
+	Verify Version
+		Enter Python Interpreter
+			Command: python
+		Verify Python Version
+			Command: import sys
+			Command: sys.version
+			Show: '3.6.12' (Or Other Install Version)
+		Verify OpenCV Version
+			Command: import cv2
+			Command: cv2.__version__
+			Show: '4.5.1' (or Newer)
+		Verify Dlib Version
+			Command: import dlib
+			Command: dlib.__version__
+			Show: '19.8.1' (Must Be)
+		Leave Python Interpreter
+			Command: quit()
+	DeActivte Environment
+		Command: conda deactivate
+--------------------------------------------------------------
+Install Spyder IDE
+	Run Anaconda Navigator
+	Switch Environment
+	Click Spyder IDE Install Button
+	Wait Finish for Automatic Install
+Cancel Vertical Line at Edit Section
+	Run Anaconda Navigator
+	Switch Environment
+	Run Spyder IDE
+	Select: Tool → Preferences → Completion and linting → Code style and formatting → 
+			Line length → Cancel Check: Show vertical line at that length
+--------------------------------------------------------------
+Run Program
+	Run Conda Prompt or PowerShell
+	Activte Environment
+		Command: conda activate [EnvName]
+	Excute Program
+		Command: python [Script Route]
+--------------------------------------------------------------		
+Distribute Program
+	Run Conda Prompt or PowerShell
+	Activte Environment
+		Command: conda activate [EnvName]
+	Install Dependent Package
+		Command: pip install pyinstaller
+	Encapsulation Script to Excutable File
+		Command: pyinstaller -F [Script Route] 
+--------------------------------------------------------------
+In Standard Input/Output, Python Default Encode is ASCII, 
+if Program Script Contain Chinese Character, you Need to Add Encode Condition like Below at Script Beginning (Line 1).
+	# coding=utf-8
+--------------------------------------------------------------
+Dlib Face Direction Sub-Detector Index
+	Front: Return Value = 0
+	Face Right(Face Left in Image):	Return Value = 1 (Mirror Mode = 2)
+	Face Left(Face Right in Image):	Return Value = 2 (Mirror Mode = 1)
+	Face Right Oblique[/](Face Left Oblique[\] in Image):	Return Value = 3 (Mirror Mode = 4)
+	Face Left Oblique[\](Face Right Oblique[/] in Image):	Return Value = 4 (Mirror Mode = 3)
