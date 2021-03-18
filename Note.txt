@@ -92,3 +92,47 @@ Dlib Face Direction Sub-Detector Index
 	Face Left(Face Right in Image):	Return Value = 2 (Mirror Mode = 1)
 	Face Right Oblique[/](Face Left Oblique[\] in Image):	Return Value = 3 (Mirror Mode = 4)
 	Face Left Oblique[\](Face Right Oblique[/] in Image):	Return Value = 4 (Mirror Mode = 3)
+--------------------------------------------------------------
+Install YOLO v5 Package
+
+Equipment
+    GPU = Nvidia GeForce GTX 1650
+        Calculate Capability = 7.5, CUDA version support 10.0 up
+    GPU Drive Version = 457.09
+    GPU Memory = 2048 MB
+    CUDA Core = 896
+
+Requirements
+    Python 3.8up
+    Pytorch 1.5up
+    Nvidia CUDA 10.2 Only and cuDNN 8.1.0.77
+    OpenCV 4.5.1
+    YOLOv5 Source Code (Download via Github)
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+1.Install Visual Studio 2015
+    Change to Optional Mode and Select Visual C++, Keep Other Default
+2.Install Nvidia CUDA Toolkit 10.2
+    Change to Optional Mode and Select CUDA Only
+    Verify CUDA Version
+        Open Cmd Prompt
+        Command: nvcc -V
+        Show: Cuda compilation tools, release 10.2, V10.2.89
+        
+Create Yolo Env
+    Command: conda create -n YOLOv5 python=3.8
+    Activate Env
+    Command: conda install git
+    Command: conda install pip (if need)
+    At Anaconda Navigator, Switch to Environment Tag, Select YOLO Env, Click "Update Index"
+    DropDownList Select to "All" and Search 'opencv', Install All Search Result
+        (libopencv, opencv, py-opencv)
+    Command: conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
+    Command: git clone https://github.com/ultralytics/yolov5.git
+    Command: cd yolov5
+    Command: pip install -U -r requirements.txt    
+Test YOLO(Attention to Excute Dir at Line 133)
+    python C:\Users\TRTC\yolov5\detect.py --source rtsp://admin:9999@10.9.0.102:8557/PSIA/Streaming/channels/2?videoCodecType=H.264 --weights weights/yolov5x.pt
+    python C:\Users\TRTC\yolov5\detect.py --source D:\ImageRecognize\Github\Sample\SampleImage.jpg --weights weights/yolov5x.pt    
+done
