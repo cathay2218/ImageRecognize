@@ -109,30 +109,36 @@ Requirements
     OpenCV 4.5.1
     YOLOv5 Source Code (Download via Github)
 
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-1.Install Visual Studio 2015
-    Change to Optional Mode and Select Visual C++, Keep Other Default
-2.Install Nvidia CUDA Toolkit 10.2
-    Change to Optional Mode and Select CUDA Only
+Install Visual Studio 2015
+    Change to Optional Mode and Select "Visual C++", Keep Other Default
+Install Nvidia CUDA Toolkit 10.2
+    Change to Optional Mode and Select "CUDA" Only
+	Copy cuDNN File to CUDA Toolkit Directory
     Verify CUDA Version
         Open Cmd Prompt
         Command: nvcc -V
         Show: Cuda compilation tools, release 10.2, V10.2.89
-        
-Create Yolo Env
-    Command: conda create -n YOLOv5 python=3.8
-    Activate Env
-    Command: conda install git
-    Command: conda install pip (if need)
-    At Anaconda Navigator, Switch to Environment Tag, Select YOLO Env, Click "Update Index"
-    DropDownList Select to "All" and Search 'opencv', Install All Search Result
-        (libopencv, opencv, py-opencv)
-    Command: conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
-    Command: git clone https://github.com/ultralytics/yolov5.git
-    Command: cd yolov5
-    Command: pip install -U -r requirements.txt    
-Test YOLO(Attention to Excute Dir at Line 133)
-    python C:\Users\TRTC\yolov5\detect.py --source rtsp://admin:9999@10.9.0.102:8557/PSIA/Streaming/channels/2?videoCodecType=H.264 --weights weights/yolov5x.pt
-    python C:\Users\TRTC\yolov5\detect.py --source D:\ImageRecognize\Github\Sample\SampleImage.jpg --weights weights/yolov5x.pt    
-done
+Create YOLOv5 Python Environment
+    Create Environment
+		Command: conda create -n YOLOv5 python=3.8
+    Activate Environment
+		Command: conda activate YOLOv5
+	Install Package Management Kit
+		Command: conda install git
+		Command: conda install pip (if needed)
+    Install OpenCV
+		At Anaconda Navigator, Switch Tag to Environment, Select YOLOv5 Env, Click "Update Index"
+		DropDownList Select to "All" and Search 'opencv', Install All Search Result
+		(libopencv, opencv, py-opencv)
+	Install Pytorch and CUDA Kit
+		Command: conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
+	Download YOLOv5 Source Code via Github
+		Command: git clone https://github.com/ultralytics/yolov5.git
+    Install YOLOv5 Kit
+		Command: cd yolov5
+		Command: pip install -U -r requirements.txt
+	Test YOLOv5 Function (Attention to Execution Directory Path)
+		python [detect.py Path] --source [Image Source] --weights [Weights File Path]
+		python C:\Users\TRTC\yolov5\detect.py --source rtsp://admin:9999@10.9.0.102:8557/PSIA/Streaming/channels/2?videoCodecType=H.264 --weights weights/yolov5x.pt
+		python C:\Users\TRTC\yolov5\detect.py --source D:\ImageRecognize\Github\Sample\SampleImage.jpg --weights weights/yolov5x.pt    
+Finish
