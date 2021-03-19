@@ -140,5 +140,13 @@ Create YOLOv5 Python Environment
 	Test YOLOv5 Function (Attention to Execution Directory Path)
 		python [detect.py Path] --source [Image Source] --weights [Weights File Path]
 		python C:\Users\TRTC\yolov5\detect.py --source rtsp://admin:9999@10.9.0.102:8557/PSIA/Streaming/channels/2?videoCodecType=H.264 --weights weights/yolov5x.pt
-		python C:\Users\TRTC\yolov5\detect.py --source D:\ImageRecognize\Github\Sample\SampleImage.jpg --weights weights/yolov5x.pt    
+		python C:\Users\TRTC\yolov5\detect.py --source D:\ImageRecognize\Github\Sample\SampleImage.jpg --weights weights/yolov5x.pt
+		python detect.py --source rtsp://admin:9999@10.9.0.102:8557/PSIA/Streaming/channels/2?videoCodecType=H.264 --weights weights/yolov5x.pt
 Finish
+
+Camera Setting
+    Stream: Single
+    Video Formate: H.264
+    Resolution: 720p
+    FPS: 30
+    Bitrate: 2500 / VBR
