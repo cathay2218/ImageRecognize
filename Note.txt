@@ -25,6 +25,7 @@ Build Devlope Environment for Dlib (CPU Version)
 	Activte Environment
 		Command: conda activate [EnvName]
 	Install Dependent Package
+		Command: conda install pip				#install pip, if needed
 		Command: pip install numpy
 		Command: pip install scipy
 		Command: pip install matplotlib
