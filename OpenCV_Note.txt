@@ -1,0 +1,31 @@
+OpenCV (cv2) 常用指令
+
+尋找輪廓
+    (list[numpy.ndarray] 輪廓列表Contour, list[numpy.ndarray] 階層列表Hierarchy{Options}) = cv2.findContours(目標影像, 輪廓檢測模式, 輪廓近似法)
+        輪廓檢測模式:
+            cv2.RETR_EXTERNAL: 只檢測外輪廓, 不處理內部連通物體
+            cv2.RETR_LIST: 不為檢測到的輪廓建立等級關係
+            cv2.RETR_CCOMP: 建立兩個關聯的輪廓, 上層為外邊界, 下層為內孔邊界, 如內孔還有一連通物體, 則亦屬該連通物之外邊界
+            cv2.RETR_TREE: 建立樹狀結構輪廓
+        輪廓近似法:
+            cv2.CHAIN_APPROX_NONE: 儲存所有輪廓座標點之元素, 相鄰兩點畫素的位置不超過1, 即max(abs(x1 - x2), abs(y1 - y2)) == 1
+            cv2.CHAIN_APPROX_SIMPLE: 將水平、垂直與對角線方向之座標元素進行壓縮, 僅保留長、寬及對角終點座標。每一矩形輪廓僅需使用4個座標點即可儲存輪廓資訊。
+            cv2.CHAIN_APPROX_TC89_L1 / cv2.CHAIN_APPROX_TC89_KCOS: 使用teh-Chinl chain近似演算法
+            
+            
+vvv
+
+
+繪製矩形 
+    cv2.rectangle(Image, Orig Coordinate, Oppo-Side Coordinate, Color(BGR), Line Width, Line Kind)
+繪製文字(不支援中文)
+    cv2.putText(Image, Text, Text Coordinate, Font, Size, Color(BGR), Line Width, Line Kind)
+    
+
+
+
+Img = cv2.imread(影像)        #讀檔
+Img = cv2.cvtColor(Image, cv2.COLOR_BGR2HSV)   #convert image to HSV
+Img = cv2.inRange(影像, 色彩參數起點, 色彩參數終點)     #依顏色範圍進行過濾, 產生黑白遮罩二值圖
+      cv2.imshow(Window Title, Image)     #開新視窗並顯示圖片
+Img = cv2.GaussianBlur()
