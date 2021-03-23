@@ -34,20 +34,17 @@ cv2.imshow('color mask_GaussianBlur', blurred)
 (cnts, _) = cv2.findContours(blurred.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)    #輸入影像為高斯模糊的副本
 print ("Matches Area Counts: " + str(len(cnts)))
 
-#取全區域輪廓
+#取全區域輪廓, 並描繪
 for cnt in cnts:
-    rect = numpy.int32(cv2.boxPoints(cv2.minAreaRect(cnt)))
-    cv2.drawContours(image, [rect], -1, (0, 255, 0), 2)     #描繪輪廓
+    rect = numpy.int32(cv2.boxPoints(cv2.minAreaRect(cnt)))     #輪廓矩形四角座標點
+    cv2.drawContours(image, [rect], -1, (0, 255, 0), 2)         #描繪輪廓
 
-#取單一輪廓
+#取單一輪廓, 並描繪
 # if len(cnts) > 1:
 #     cnt = sorted(cnts, key = cv2.contourArea, reverse = True)[0]      #Sort by Contour Area, Ordey by DESC (reverse = True)
-
-# # compute the (rotated) bounding box around then
-# # contour and then draw it
-# rect = numpy.int32(cv2.boxPoints(cv2.minAreaRect(cnt)))
-# cv2.drawContours(image, [rect], -1, (0, 255, 0), 2)
-
+#
+# rect = numpy.int32(cv2.boxPoints(cv2.minAreaRect(cnt)))     #輪廓矩形四角座標點
+# cv2.drawContours(image, [rect], -1, (0, 255, 0), 2)         #描繪輪廓
 
 #Show Image and Wait Any Key to Exit Program
 cv2.imshow("Color Tracking", image)
