@@ -143,6 +143,11 @@ Create YOLOv5 Python Environment
 		python C:\Users\TRTC\yolov5\detect.py --source rtsp://admin:9999@10.9.0.102:8557/PSIA/Streaming/channels/2?videoCodecType=H.264 --weights weights/yolov5x.pt
 		python C:\Users\TRTC\yolov5\detect.py --source D:\ImageRecognize\Github\Sample\SampleImage.jpg --weights weights/yolov5x.pt
 		python detect.py --source rtsp://admin:9999@10.9.0.102:8557/PSIA/Streaming/channels/2?videoCodecType=H.264 --weights weights/yolov5x.pt
+		
+    Function Argument
+        --source [Source] : Image or Stream Input Path
+        --weights [weights file] : Recognize Weights File Path
+        --device [0 | cpu] : 0 = GPU for CUDA / cuDNN Calculate; cpu = CPU Calculate
 Finish
 
 Camera Setting
@@ -151,3 +156,11 @@ Camera Setting
     Resolution: 720p
     FPS: 30
     Bitrate: 2500 / VBR
+    
+    
+    
+--------------------------------------------------------------
+PyQt5 Package Install
+    at env:
+        pip install PyQt5
+        

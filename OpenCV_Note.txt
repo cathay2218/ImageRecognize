@@ -12,8 +12,9 @@ OpenCV (cv2) 常用指令
             cv2.CHAIN_APPROX_SIMPLE: 將水平、垂直與對角線方向之座標元素進行壓縮, 僅保留長、寬及對角終點座標。每一矩形輪廓僅需使用4個座標點即可儲存輪廓資訊。
             cv2.CHAIN_APPROX_TC89_L1 / cv2.CHAIN_APPROX_TC89_KCOS: 使用teh-Chinl chain近似演算法
             
-            
-vvv
+描繪輪廓
+    cv2.drawContours(影像, 輪廓矩形四角座標點, -1, (0, 255, 0), 2)            
+
 
 
 繪製矩形 
@@ -25,7 +26,7 @@ vvv
 
 
 Img = cv2.imread(影像)        #讀檔
-Img = cv2.cvtColor(Image, cv2.COLOR_BGR2HSV)   #convert image to HSV
+Img = cv2.cvtColor(Image, cv2.COLOR_BGR2HSV)   #將影像轉換為HSV色彩空間
 Img = cv2.inRange(影像, 色彩參數起點, 色彩參數終點)     #依顏色範圍進行過濾, 產生黑白遮罩二值圖
       cv2.imshow(Window Title, Image)     #開新視窗並顯示圖片
 Img = cv2.GaussianBlur()
