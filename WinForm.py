@@ -5,7 +5,8 @@ import time
 
 def showtime():
     print (time.ctime())
-
+    
+    
 
 #------------------------------------------------------
 form = tkinter.Tk()     #declare new winform

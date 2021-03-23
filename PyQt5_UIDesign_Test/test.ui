@@ -17,14 +17,14 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>160</y>
-      <width>121</width>
+      <x>30</x>
+      <y>80</y>
+      <width>51</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>Show Current Time</string>
+     <string>time</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
