@@ -164,3 +164,12 @@ PyQt5 Package Install
     at env:
         pip install PyQt5
         
+        
+        
+--------------------------------------------------------------
+LabelImg 安裝
+在有PyQt5的env中
+    pip install labelimg
+執行
+在有PyQt5的env中
+    labelimg

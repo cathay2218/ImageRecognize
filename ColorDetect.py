@@ -46,7 +46,7 @@ for cnt in cnts:
 # rect = numpy.int32(cv2.boxPoints(cv2.minAreaRect(cnt)))     #輪廓矩形四角座標點
 # cv2.drawContours(image, [rect], -1, (0, 255, 0), 2)         #描繪輪廓
 
-#Show Image and Wait Any Key to Exit Program
+#顯示偵測結果並等待任意鍵離開程式
 cv2.imshow("Color Tracking", image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
