@@ -174,3 +174,10 @@ LabelImg 安裝
 執行
 在有PyQt5的env中
     labelimg
+    
+--------------------------------------------------------------
+YOLOv5 模型訓練
+python train.py --data data\cable.yaml --epochs 100 --img-size 160 --device 0 --batch-size 16 --cfg models\yolov5x_cable.yaml --hyp data\hyp.scratch.yaml
+python train.py --data data\cable.yaml --epochs 100 --img-size 160 --device 0 --batch-size 16 --cfg models\yolov5x_cable.yaml --hyp data\hyp.scratch.yaml --rect    => out of memory
+python train.py --data data\cable.yaml --epochs 100 --img-size 160 --device 0 --batch-size 8 --cfg models\yolov5x_cable.yaml --hyp data\hyp.scratch.yaml --rect
+python train.py --data data\cable.yaml --epochs 100 --img-size 160 --device 0 --batch-size 8 --cfg models\yolov5x_cable.yaml --hyp data\hyp.scratch.yaml --rect --adam  ==>OK
