@@ -1,4 +1,5 @@
 import cv2
+import time
 import numpy
 import argparse
 
@@ -7,23 +8,33 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-input', type = str, help = 'Image Path for Detect Color')
 parser.add_argument('-lowerColor', type = str, help = 'Lower Detect Color Bound [B, G, R]')
 parser.add_argument('-upperColor', type = str, help = 'Upper Detect Color Bound [B, G, R]')
+parser.add_argument('-saveVideo', type = str, help = 'Save Image to Video File')
 
 arg = parser.parse_args()
 print (arg)
 
-#=====================================================================================
-
 #cap = cv2.VideoCapture(arg.input)
 cap = cv2.VideoCapture("rtsp://admin:9999@10.9.0.102:8557/PSIA/Streaming/channels/2?videoCodecType=H.264")
 
+#saveVideo = arg.saveVideo
+saveVideo = True
 
 #要偵測的顏色範圍[B,G,R]
 lower = numpy.array([245, 245, 245])
 upper = numpy.array([255, 255, 255])
 
+#MainFunction=========================================================================
+if saveVideo:
+    #(輸出檔名, 編碼方式, FPS, FrameSize, 彩色)
+    out = cv2.VideoWriter('output_{0}.mp4'.format(time.strftime("%Y%m%d_%H%M%S", time.gmtime())), cv2.VideoWriter_fourcc(*'mp4v'), cap.get(cv2.CAP_PROP_FPS), (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))), True)
+
 while(cap.isOpened()):
     #Take Frame from Camera
     ret, frame = cap.read()
+    
+    if not ret:
+        print("Can't receive frame (stream end?). Exiting ...")
+        break
     
     #以HSV色彩空間模型抓取目標影像顏色範圍(簡化輸出為黑白遮罩二值圖)
     filtered = cv2.inRange(frame, lower, upper)
@@ -45,10 +56,16 @@ while(cap.isOpened()):
 
     cv2.imshow("Color Tracking", frame)
     
+    if saveVideo:
+        out.write(frame)  
+    
     #Waiting for Space Key to Leave Loop
     if cv2.waitKey(1) & 0xFF == ord(' '):
         break
 
 #Release Memory and Exit Program
+if saveVideo:
+    out.release()
+    
 cap.release()
 cv2.destroyAllWindows()
