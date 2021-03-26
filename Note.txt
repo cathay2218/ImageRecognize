@@ -22,6 +22,19 @@ Build Devlope Environment for Dlib (CPU Version)
 	Run Conda Prompt or PowerShell
 	Create Environment
 		Command: conda create -n [EnvName] python=3.6.12
+	
+	Install Spyder IDE
+		Run Anaconda Navigator
+		Switch Environment
+		Click Spyder IDE Install Button
+		Wait Finish for Automatic Install
+	Cancel Vertical Line at Edit Section
+		Run Anaconda Navigator
+		Switch Environment
+		Run Spyder IDE
+		Select: Tool → Preferences → Completion and linting → Code style and formatting → 
+				Line length → Cancel Check: Show vertical line at that length
+
 	Activte Environment
 		Command: conda activate [EnvName]
 	Install Dependent Package
@@ -30,11 +43,11 @@ Build Devlope Environment for Dlib (CPU Version)
 		Command: pip install scipy
 		Command: pip install matplotlib
 		Command: pip install scikit-learn
+		Command: pip install scikit-image		#for Generate HOG SVM Characteristic File
 		Command: pip install jupyter
 		Command: pip install opencv-python
 		Command: pip install dlib==19.8.1
 		Command: pip install imutils
-		Command: pip install scikit-image		#for Generate HOG SVM Characteristic File
 	Verify Version
 		Enter Python Interpreter
 			Command: python
@@ -54,18 +67,6 @@ Build Devlope Environment for Dlib (CPU Version)
 			Command: quit()
 	DeActivte Environment
 		Command: conda deactivate
---------------------------------------------------------------
-Install Spyder IDE
-	Run Anaconda Navigator
-	Switch Environment
-	Click Spyder IDE Install Button
-	Wait Finish for Automatic Install
-Cancel Vertical Line at Edit Section
-	Run Anaconda Navigator
-	Switch Environment
-	Run Spyder IDE
-	Select: Tool → Preferences → Completion and linting → Code style and formatting → 
-			Line length → Cancel Check: Show vertical line at that length
 --------------------------------------------------------------
 Run Program
 	Run Conda Prompt or PowerShell
