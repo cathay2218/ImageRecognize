@@ -1,13 +1,13 @@
 # python ColorDetect_Stream.py -input rtsp://admin:9999@10.9.0.102:8557/PSIA/Streaming/channels/2?videoCodecType=H.264
 # python ColorDetect_Stream.py -input screen
-
+# -saveVideo True
 
 import cv2
 import time
 import numpy
 import argparse
-from PIL import ImageGrab
 import win32gui
+from PIL import ImageGrab
 
 #Argument Input via Command Prompt
 parser = argparse.ArgumentParser()
@@ -32,10 +32,10 @@ cap = cv2.VideoCapture("rtsp://admin:9999@10.9.0.102:8557/PSIA/Streaming/channel
 
 
 #螢幕擷取==============================================================================
-windowTitle = win32gui.FindWindow(None, '小算盤')
+windowTitle = win32gui.FindWindow(None, '小算盤')  #新增arg輸入
 
 #MainFunction=========================================================================
-if saveVideo:
+if saveVideo:  #合併至下方來源判斷  screen無法錄影原因為FPS及size
     #(輸出檔名, 編碼方式, FPS, FrameSize, 彩色)
     out = cv2.VideoWriter('output_{0}.mp4'.format(time.strftime("%Y%m%d_%H%M%S", time.gmtime())), cv2.VideoWriter_fourcc(*'mp4v'), cap.get(cv2.CAP_PROP_FPS), (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))), True)
 
