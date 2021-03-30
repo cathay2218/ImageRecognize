@@ -41,22 +41,27 @@ if saveVideo and not arg.input == 'screen':
     out = cv2.VideoWriter('output_{0}.mp4'.format(time.strftime("%Y%m%d_%H%M%S", time.localtime())), cv2.VideoWriter_fourcc(*'mp4v'), cap.get(cv2.CAP_PROP_FPS), (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))), True)
 #Screen Record
 elif saveVideo:
-    left, top, right, bot = win32gui.GetWindowRect(windowTitle)             #找出目標視窗矩形範圍
+    try:
+        left, top, right, bot = win32gui.GetWindowRect(windowTitle)             #找出目標視窗矩形範圍
+    except:
+        print ("Can't captrue window (external program end?). Exiting ...")
+        break
     width = right - left                                                    #Get Window width
     height = bot - top                                                      #Get Window height
     out = cv2.VideoWriter('output_{0}.mp4'.format(time.strftime("%Y%m%d_%H%M%S", time.localtime())), cv2.VideoWriter_fourcc(*'mp4v'), 30, (int(width), int(height)), True)
 
 #MainFunction=========================================================================
 while(True):
-    #Screen Record
+    #Screen Source
     if arg.input == 'screen':
         try:
             left, top, right, bot = win32gui.GetWindowRect(windowTitle)             #找出目標視窗矩形範圍
             img = ImageGrab.grab(bbox = (left, top, right, bot))                    #抓取矩形範圍影像
-            frame = cv2.cvtColor(numpy.array(img), cv2.COLOR_BGR2RGB)               #將來源矩形影像自BGR色彩模式轉為RGB模式    
+            frame = cv2.cvtColor(numpy.array(img), cv2.COLOR_BGR2RGB)               #將來源矩形影像自BGR色彩模式轉為RGB模式
         except:
             print ("Can't captrue window (external program end?). Exiting ...")
-    #RTSP or File Record
+            break
+    #RTSP or File Source
     else:
         #Take Frame from Stream
         ret, frame = cap.read()
@@ -64,6 +69,11 @@ while(True):
         if not ret:
             print("Can't receive frame (stream end?). Exiting ...")
             break
+        
+    #切割區域子程式
+    frame
+    
+    
     
     #以HSV色彩空間模型抓取目標影像顏色範圍(簡化輸出為黑白遮罩二值圖)
     filtered = cv2.inRange(frame, lower, upper)
