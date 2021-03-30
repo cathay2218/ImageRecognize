@@ -1,6 +1,6 @@
 # python ColorDetect_Stream.py -input rtsp://admin:9999@10.9.0.102:8557/PSIA/Streaming/channels/2?videoCodecType=H.264
-# python ColorDetect_Stream.py -input screen
-# -saveVideo True
+# python ColorDetect_Stream.py -input screen -saveVideo True
+# python ColorDetect_Stream.py -input screen -saveVideo true -windowTitle 小算盤
 
 import cv2
 import time
@@ -15,6 +15,7 @@ parser.add_argument('-input', type = str, help = 'Image Path for Detect Color')
 parser.add_argument('-lowerColor', type = str, help = 'Lower Detect Color Bound [B, G, R]')
 parser.add_argument('-upperColor', type = str, help = 'Upper Detect Color Bound [B, G, R]')
 parser.add_argument('-saveVideo', type = str, help = 'Save Image to Video File')
+parser.add_argument('-windowTitle', type = str, help = 'Window Title for Screen Capture')
 
 arg = parser.parse_args()
 print (arg)
@@ -23,34 +24,43 @@ print (arg)
 lower = numpy.array([245, 245, 245])
 upper = numpy.array([255, 255, 255])
 
-#saveVideo = arg.saveVideo
-saveVideo = True
+#輸入參數==============================================================================
+saveVideo = arg.saveVideo                                           #bool: 是否將影像儲存為檔案
+windowTitle = win32gui.FindWindow(None, arg.windowTitle)            #螢幕擷取模式: 目標視窗
 
-#串流輸入==============================================================================
-#cap = cv2.VideoCapture(arg.input)
-cap = cv2.VideoCapture("rtsp://admin:9999@10.9.0.102:8557/PSIA/Streaming/channels/2?videoCodecType=H.264")
+#輸入串流==============================================================================
+if not arg.input == 'screen':
+    #cap = cv2.VideoCapture("rtsp://admin:9999@10.9.0.102:8557/PSIA/Streaming/channels/2?videoCodecType=H.264")
+    cap = cv2.VideoCapture(arg.input)
 
-
-#螢幕擷取==============================================================================
-windowTitle = win32gui.FindWindow(None, '小算盤')  #新增arg輸入
+#==============================================================================
+#Video 存檔僅能開一檔
+#RTSP or File Record
+if saveVideo and not arg.input == 'screen':
+    #(輸出檔名, 編碼方式, FPS, FrameSize, 彩色)
+    out = cv2.VideoWriter('output_{0}.mp4'.format(time.strftime("%Y%m%d_%H%M%S", time.localtime())), cv2.VideoWriter_fourcc(*'mp4v'), cap.get(cv2.CAP_PROP_FPS), (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))), True)
+#Screen Record
+elif saveVideo:
+    left, top, right, bot = win32gui.GetWindowRect(windowTitle)             #找出目標視窗矩形範圍
+    width = right - left                                                    #Get Window width
+    height = bot - top                                                      #Get Window height
+    out = cv2.VideoWriter('output_{0}.mp4'.format(time.strftime("%Y%m%d_%H%M%S", time.localtime())), cv2.VideoWriter_fourcc(*'mp4v'), 30, (int(width), int(height)), True)
 
 #MainFunction=========================================================================
-if saveVideo:  #合併至下方來源判斷  screen無法錄影原因為FPS及size
-    #(輸出檔名, 編碼方式, FPS, FrameSize, 彩色)
-    out = cv2.VideoWriter('output_{0}.mp4'.format(time.strftime("%Y%m%d_%H%M%S", time.gmtime())), cv2.VideoWriter_fourcc(*'mp4v'), cap.get(cv2.CAP_PROP_FPS), (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))), True)
-
 while(True):
-    
+    #Screen Record
     if arg.input == 'screen':
-        left, top, right, bot = win32gui.GetWindowRect(windowTitle)             #找出目標視窗矩形範圍
-        img = ImageGrab.grab(bbox = (left, top, right, bot))                    #抓取矩形範圍影像
-        
-        #frame = numpy.array(img)
-        frame = cv2.cvtColor(numpy.array(img), cv2.COLOR_BGR2RGB)
+        try:
+            left, top, right, bot = win32gui.GetWindowRect(windowTitle)             #找出目標視窗矩形範圍
+            img = ImageGrab.grab(bbox = (left, top, right, bot))                    #抓取矩形範圍影像
+            frame = cv2.cvtColor(numpy.array(img), cv2.COLOR_BGR2RGB)               #將來源矩形影像自BGR色彩模式轉為RGB模式    
+        except:
+            print ("Can't captrue window (external program end?). Exiting ...")
+    #RTSP or File Record
     else:
         #Take Frame from Stream
         ret, frame = cap.read()
-    
+        
         if not ret:
             print("Can't receive frame (stream end?). Exiting ...")
             break
