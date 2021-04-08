@@ -10,8 +10,13 @@ import argparse
 import win32gui
 from PIL import ImageGrab
 
-def reginCheck():
-    reginSection = int(arg.detectSection)
+#函式區段==============================================================================
+def reginCheck():       #True = 顯示目標輪廓
+    try:                                                                                    #嘗試將參數轉為int, 如無法轉換則跳脫函式(視同不偵測目標輪廓分區位置)
+        reginSection = int(arg.detectSection)
+    except:
+        return True
+    
     margin_x = width / 2
     margin_y = height / 2
     coordinate1 = rect[0]
@@ -36,10 +41,10 @@ def reginCheck():
     elif (reginSection == 4):
         if (coordinate1[0] > width / 2) and (coordinate2[0] > width / 2) and (coordinate2[1] > height / 2) and (coordinate3[1] > height / 2):
             return True
-    else:   #未傳入參數或參數值非1~4, 視同不偵測目標輪廓分區位置
+    else:   #參數值非1~4, 視同不偵測目標輪廓分區位置
         return True
 
-#Argument Input via Command Prompt
+#Argument Input via Command Prompt=====================================================
 parser = argparse.ArgumentParser()
 parser.add_argument('-input', type = str, help = 'Image Path for Detect Color')
 parser.add_argument('-lowerColor', type = str, help = 'Lower Detect Color Bound [B, G, R]')
@@ -56,14 +61,16 @@ print (arg)
 lower = numpy.array([245, 245, 245])
 upper = numpy.array([255, 255, 255])
 
-#輸入參數==============================================================================
 saveVideo = arg.saveVideo                                           #bool: 是否將影像儲存為檔案
 windowTitle = win32gui.FindWindow(None, arg.windowTitle)            #螢幕擷取模式: 目標視窗
 
 #輸入串流==============================================================================
 if not arg.input == 'screen':
     #cap = cv2.VideoCapture("rtsp://admin:9999@10.9.0.102:8557/PSIA/Streaming/channels/2?videoCodecType=H.264")
-    cap = cv2.VideoCapture(arg.input)
+    if arg.input == '0':                                            #內建鏡頭(cv2.VideoCapture(0))，須將arg input string 換型為 int
+        cap = cv2.VideoCapture(int(arg.input))
+    else:                                                           #檔案或RSTP串流，維持string type
+        cap = cv2.VideoCapture(arg.input)
     
     #檢查串流是否存在(timeout需一段時間)
     ret, _ = cap.read()
@@ -134,7 +141,7 @@ while(True):
     
     cv2.imshow("Color Tracking", frame)                             #顯示偵測結果
     
-    if saveVideo:                                                   #儲存結果至mp4檔
+    if saveVideo:                                                   #儲存影像至mp4檔
         out.write(frame)
     
     #Waiting for Space Key to Leave Loop
