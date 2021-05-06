@@ -2,6 +2,7 @@
 # python ColorDetect_Stream.py -input screen -saveVideo True
 # python ColorDetect_Stream.py -input screen -saveVideo true -windowTitle 小算盤
 
+import os
 import sys
 import cv2
 import time
@@ -53,15 +54,17 @@ parser.add_argument('-saveVideo', type = str, help = 'Save Image to Video File')
 parser.add_argument('-windowTitle', type = str, help = 'Window Title for Screen Capture')
 parser.add_argument('-detectSection', type = str, help = 'Set Detect Section (Section 1~4, None for All Section)')
 parser.add_argument('-showSectionLine', type = str, help = 'Show Section Separate Line on Canvas')
+parser.add_argument('-savePicture', type = str, help = 'Save Picture, if Target Color Detected')
 
 arg = parser.parse_args()
 print (arg)
 
 #要偵測的顏色範圍[B,G,R]
-lower = numpy.array([245, 245, 245])
+lower = numpy.array([235, 235, 235])
 upper = numpy.array([255, 255, 255])
 
 saveVideo = arg.saveVideo                                           #bool: 是否將影像儲存為檔案
+savePicture = arg.savePicture                                       #bool: 是否於偵測到目標顏色時儲存截圖
 windowTitle = win32gui.FindWindow(None, arg.windowTitle)            #螢幕擷取模式: 目標視窗
 
 #輸入串流==============================================================================
@@ -141,6 +144,14 @@ while(True):
     
     cv2.imshow("Color Tracking", frame)                             #顯示偵測結果
     
+    #當有偵測標的顏色出現時且有開啟存檔功能，則儲存圖片
+    if savePicture and len(cnts) > 0:
+        if not os.path.isdir('.\DetectedPicture'):                  #當存檔資料夾不存在時，建立資料夾
+            print ('Depository Path not Exist, Create!')
+            os.makedirs('.\DetectedPicture')
+
+        cv2.imwrite('DetectedPicture\ScreenShot_{0}.png'.format(time.strftime("%Y%m%d_%H%M%S", time.localtime())), frame)   #儲存偵測結果
+            
     if saveVideo:                                                   #儲存影像至mp4檔
         out.write(frame)
     
